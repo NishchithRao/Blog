@@ -10,6 +10,7 @@ export default defineConfig({
       destination: "/Blog/drama",
     },
   },
-  site: "https://nishchithrao.github.io/Blog",
+  site: "https://nishchithrao.github.io",
   base: "/Blog",
+  trailingSlash: "never",
 });

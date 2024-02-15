@@ -1,7 +1,10 @@
 {
-  "name": "blog-astro",
+  "name": "blog",
   "type": "module",
-  "homepage": "https://nishchithrao.github.io/blog",
+  "homepage": "https://nishchithrao.github.io/Blog",
+  "author": {
+    "name": "Nishchith Rao"
+  },
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
