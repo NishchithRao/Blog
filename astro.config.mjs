@@ -7,9 +7,9 @@ export default defineConfig({
   redirects: {
     "/": {
       status: 302,
-      destination: "/blog/drama",
+      destination: "/Blog/drama",
     },
   },
-  site: "https://nishchithrao.github.io/blog",
-  base: "/blog",
+  site: "https://nishchithrao.github.io/Blog",
+  base: "/Blog",
 });
