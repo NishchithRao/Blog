@@ -1,6 +1,7 @@
 {
   "name": "blog-astro",
   "type": "module",
+  "homepage": "https://nishchithrao.github.io/blog",
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",

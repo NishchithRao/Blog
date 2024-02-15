@@ -5,6 +5,11 @@ import mdx from "@astrojs/mdx";
 export default defineConfig({
   integrations: [mdx()],
   redirects: {
-    "/": "/drama",
+    "/": {
+      status: 302,
+      destination: "/blog/drama",
+    },
   },
+  site: "https://nishchithrao.github.io/blog",
+  base: "/blog",
 });
