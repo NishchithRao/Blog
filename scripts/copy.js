@@ -1,7 +1,7 @@
-import { cpSync } from "fs";
+import { copyFileSync } from "fs";
 import { join } from "path";
 
-const jekyllPath = join(process.cwd(), "./nojekyll");
-const distPath = join(process.cwd(), "dist", "nojekyll");
+const jekyllPath = join(process.cwd(), "./.nojekyll");
+const distPath = join(process.cwd(), "dist", ".nojekyll");
 
-cpSync(jekyllPath, distPath);
+copyFileSync(jekyllPath, distPath);
