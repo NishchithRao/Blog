@@ -1,0 +1,83 @@
+---
+import "../base.css";
+import Header from "../components/header.astro";
+import "@fontsource/fira-sans";
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <title>{title}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="A blog by Nishchith, covering all things Tech"
+    />
+    <style>
+      .wrapper {
+        grid-column-start: b;
+        grid-column-end: c;
+        width: 100%;
+        padding-bottom: 50px;
+        display: grid;
+      }
+
+      .line-container {
+        position: fixed;
+        height: 100vh;
+        width: 100%;
+        display: grid;
+        grid-template-columns: var(--grid-cols);
+        z-index: 1;
+        left: 0;
+        top: 0;
+      }
+      .line-container .line {
+        border-right: 1px dotted rgb(var(--foreground-color), 0.3);
+        height: 100%;
+        background-color: rgba(var(--foreground-color), 0.075);
+      }
+
+      .children {
+        z-index: 5;
+        position: relative;
+      }
+
+      .main {
+        padding-top: 60px;
+      }
+
+      @media screen and (max-width: 600px) {
+        .wrapper {
+          grid-column-end: b;
+        }
+        .line-container .line:nth-child(3) {
+          display: none;
+        }
+
+        .line-container .line:nth-child(4) {
+          display: none;
+        }
+        .main {
+          padding-top: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <Header />
+      <main class="main">
+        <div class="line-container">
+          {Array.from({ length: 6 }).map(() => <div class="line" />)}
+        </div>
+        <div class="children"><slot /></div>
+      </main>
+    </div>
+  </body>
+</html>

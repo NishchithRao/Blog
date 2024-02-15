@@ -1,0 +1,42 @@
+---
+import Link from "./mdx/link.astro";
+---
+
+<style>
+  .span {
+    font-size: 18px;
+    color: rgb(var(--foreground-color));
+    font-weight: bold;
+  }
+
+  .author {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .header {
+    position: sticky;
+    top: 0;
+    padding-bottom: 40px;
+    padding-top: 20px;
+    z-index: 5;
+    display: flex;
+    gap: 10px;
+    padding-left: 15px;
+    align-items: center;
+  }
+
+  .divider {
+    color: grey;
+    font-size: 18px;
+    font-weight: bold;
+  }
+</style>
+
+<Link href="/" active={false}>
+  <header class="header">
+    <span class="author">Nishchith Rao</span>
+    <span class="divider">/</span>
+    <span class="span">Blog</span>
+  </header>
+</Link>

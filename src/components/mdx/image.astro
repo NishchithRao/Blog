@@ -1,0 +1,9 @@
+---
+import { Image as AstroImage } from "astro:assets";
+
+type Props = any;
+
+const { src, alt } = Astro.props;
+---
+
+{(<AstroImage src={src} alt={alt} height={400} width={400} />)}

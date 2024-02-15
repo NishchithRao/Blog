@@ -1,0 +1,155 @@
+---
+import Image from "../components/mdx/image.astro";
+import Link from "../components/mdx/link.astro";
+import Paragraph from "../components/mdx/paragraph.astro";
+import Date from "../components/date.astro";
+
+import type { Article } from "../types";
+
+interface Props extends Article {
+  href?: string;
+  image?: string;
+}
+
+const { href, date, title, description, image } = Astro.props;
+---
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+    padding-top: 10px;
+  }
+
+  .titleContainer {
+    display: grid;
+    grid-template-columns: 0.9fr 1fr 1fr 1fr;
+    grid-template-areas: "a b c d";
+    align-items: flex-start;
+  }
+  .titleContainer h3 {
+    /* max-width: calc(100% / 1.6); */
+    display: grid;
+    grid-column-start: a;
+    grid-column-end: c;
+    padding-right: 10px;
+    font-size: 64px;
+    padding-top: 20px;
+  }
+
+  .content {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 20px;
+    padding-top: 15px;
+  }
+
+  .link {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    width: 100%;
+  }
+  .HoverArrow__linePath,
+  .HoverArrow__tipPath {
+    transition: all 0.5s;
+  }
+  .HoverArrow__linePath {
+    opacity: 0;
+    transform: translate(-100%);
+  }
+
+  .link:hover .HoverArrow__linePath {
+    opacity: 1;
+    transform: translate(0);
+  }
+
+  .link:hover .HoverArrow__tipPath {
+    transform: translate(50%);
+  }
+
+  .cardTop {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    align-items: center;
+  }
+
+  .link:hover svg {
+    width: 15px;
+  }
+
+  .description {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  @media screen and (max-width: 600px) {
+    .titleContainer {
+      grid-template-rows: auto auto;
+      grid-template-areas:
+        "a"
+        "b";
+      grid-template-columns: 1fr;
+    }
+
+    .titleContainer h3 {
+      grid-row-start: b;
+      padding-bottom: 0;
+      padding-top: 20px;
+      padding-right: 0;
+      font-size: 48px;
+    }
+    .card {
+      padding-left: 0;
+    }
+
+    .content {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto;
+    }
+
+    .cardTop {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>
+
+<div>
+  <div class="cardTop">
+    <div></div>
+    <Date>{date}</Date>
+  </div>
+  <Link title={title} href={href}>
+    <div>
+      <div class="titleContainer">
+        <h3>{title}</h3>
+      </div>
+      <div class="content">
+        <div class="description">
+          <Paragraph>{description}</Paragraph>
+
+          <div class="link">
+            <span>Read more</span>
+            <svg
+              class="HoverArrow"
+              width="10"
+              height="10"
+              viewBox="0 0 10 10"
+              aria-hidden="true"
+              stroke="rgb(var(--foreground-color))"
+              stroke-width={3}
+            >
+              <g fill-rule="evenodd">
+                <path class="HoverArrow__linePath" d="M0 5h7"></path>
+                <path class="HoverArrow__tipPath" d="M1 1l4 4-4 4"></path>
+              </g>
+            </svg>
+          </div>
+        </div>
+        {image && <Image alt={title} src={image} />}
+      </div>
+    </div>
+  </Link>
+</div>

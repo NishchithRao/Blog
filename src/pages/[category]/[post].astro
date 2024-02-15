@@ -1,0 +1,124 @@
+---
+import type { GetStaticPathsResult, MDXInstance } from "astro";
+import type { Article } from "../../types";
+import { getPostName } from "../../utils";
+
+// Components
+import Link from "../../components/mdx/link.astro";
+import Date from "../../components/date.astro";
+import PageWrapper from "../../layouts/page-wrapper.astro";
+import Image from "../../components/mdx/image.astro";
+import Paragraph from "../../components/mdx/paragraph.astro";
+
+export const getStaticPaths = async (): Promise<GetStaticPathsResult> => {
+  const posts = await Astro.glob<Article>("/posts/*.mdx");
+
+  return posts.map((p) => {
+    return {
+      params: {
+        post: getPostName(p.url),
+        category: p.frontmatter.category,
+      },
+    };
+  });
+};
+
+const { post } = Astro.params;
+
+const posts = await Astro.glob<Article>("/posts/*.mdx");
+const postContent = posts.find(
+  (p) => getPostName(p.url) === post
+) as MDXInstance<Article>;
+
+const { Content } = postContent;
+---
+
+<style>
+  .content {
+    z-index: 5;
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-areas: "a b c d";
+  }
+  .children {
+    padding-top: 30px;
+    display: grid;
+    grid-column-start: a;
+    grid-column-end: c;
+    padding-left: 20px;
+    margin-top: 20px;
+  }
+  .categoryContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-left: 20px;
+  }
+
+  .category {
+    font-size: 28px;
+    font-weight: bold;
+    display: block;
+  }
+
+  .divider {
+    padding-right: 15px;
+    color: grey;
+  }
+
+  .categoryText {
+    text-transform: capitalize;
+    color: rgb(var(--foreground-color));
+  }
+
+  .categoryDescription {
+    color: gray;
+    font-weight: lighter;
+    line-height: 1.3;
+    letter-spacing: 1.3px;
+  }
+
+  .date {
+    grid-area: d;
+  }
+
+  @media screen and (max-width: 600px) {
+    .content {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto;
+      grid-template-areas: unset;
+    }
+
+    .date {
+      grid-area: unset;
+    }
+
+    .children {
+      grid-column: unset;
+      padding-left: 0;
+    }
+
+    .categoryContainer {
+      padding-bottom: 20px;
+      padding-left: 0;
+    }
+  }
+</style>
+
+<PageWrapper title={postContent.frontmatter.title}>
+  <div class="content">
+    <div class="categoryContainer">
+      <span class="category">
+        <span class="divider">/</span>
+        <span class="categoryText">{postContent.frontmatter.category}</span>
+      </span>
+    </div>
+    <div class="date">
+      <Date>{postContent.frontmatter.date}</Date>
+    </div>
+    <div class="children">
+      <Content components={{ a: Link, img: Image, p: Paragraph }} />
+    </div>
+  </div>
+</PageWrapper>
